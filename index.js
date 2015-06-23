@@ -46,6 +46,8 @@ describe( 'Logging into WordPress.com', function() {
 } );
 
 describe( 'Logging into self-hosted site', function() {
+	this.timeout( 99999999 );
+
 	it( 'login form exists and user can log in', function( done ) {
 		client
 			.url( url.resolve( config.jetpackSite.url, '/wp-admin' ) )
@@ -61,6 +63,28 @@ describe( 'Logging into self-hosted site', function() {
 			.submitForm( '#loginform' )
 			.waitFor( '.wp-admin', 2000, function( err ) {
 				assert( undefined === err, 'login was successful' );
+			} )
+			.call( done );
+	} );
+} );
+
+describe( 'Toggle actions', function() {
+	this.timeout( 99999999 );
+
+	it( 'toggles do not exist on all sites plugin list', function( done ) {
+		client
+			.url( 'https://wordpress.com/plugins' )
+			.waitFor( '.plugin-item__actions', 2000, function( err ) {
+				assert( err, 'plugin actions do not exist' );
+			} )
+			.call( done );
+	} );
+
+	it( 'toggles exist on single site plugin list', function( done ) {
+		client
+			.url( url.resolve( 'https://wordpress.com', url.parse( config.jetpackSite.url ).host ) )
+			.waitFor( '.plugin-item__actions', 2000, function( err ) {
+				assert( err, 'plugin actions do exist' );
 			} )
 			.call( done );
 	} );
