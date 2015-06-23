@@ -19,4 +19,4 @@ Running Tests
 -------------
 Before running the test suite, you should first ensure that the Selenium environment is running. Assuming that you installed [vvo/selenium-standalone](https://github.com/vvo/selenium-standalone), you can now run `selenium-standalone start`.
 
-At this point, you can now run the test suite by running `mocha index.js`.
+At this point, you can now run all tests suites by running `npm test` from the root directory.
