@@ -1,5 +1,6 @@
 var webdriverio = require( 'webdriverio' ),
-	assert = require( 'assert' );
+	assert = require( 'assert' ),
+	url = require( 'url' );
 
 var config = require( './config' );
 
@@ -38,6 +39,27 @@ describe( 'Logging into WordPress.com', function() {
 			} )
 			.submitForm( '#loginform' )
 			.waitFor( 'ul.menu-right li.me a', 2000, function( err ) {
+				assert( undefined === err, 'login was successful' );
+			} )
+			.call( done );
+	} );
+} );
+
+describe( 'Logging into self-hosted site', function() {
+	it( 'login form exists and user can log in', function( done ) {
+		client
+			.url( url.resolve( config.jetpackSite.url, '/wp-admin' ) )
+			.waitFor( '#loginform', 2000, function( err ) {
+				assert( undefined === err, 'loginform exists' );
+			} )
+			.setValue( '#user_login', config.jetpackSite.username, function( err ) {
+				assert( undefined === err, 'there was not an error filling in the username' );
+			} )
+			.setValue( '#user_pass', config.jetpackSite.password, function( err ) {
+				assert( undefined === err, 'there was not an error filling in the password' );
+			} )
+			.submitForm( '#loginform' )
+			.waitFor( '.wp-admin', 2000, function( err ) {
 				assert( undefined === err, 'login was successful' );
 			} )
 			.call( done );
