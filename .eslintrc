@@ -9,9 +9,6 @@
 		"jsx": true,
 		"modules": true
 	},
-	"plugins": [
-		"eslint-plugin-react"
-	],
 	"rules": {
 		"brace-style": [ 2, "1tbs" ],
 		// REST API objects include underscores

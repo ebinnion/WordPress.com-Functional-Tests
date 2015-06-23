@@ -1,6 +1,3 @@
-( function () {
-	'use strict';
-
 var webdriverio = require( 'webdriverio' );
 var options = {
 	desiredCapabilities: {
@@ -16,4 +13,3 @@ webdriverio
 		console.log('Title was: ' + res.value);
 	})
 	.end();
-}());
