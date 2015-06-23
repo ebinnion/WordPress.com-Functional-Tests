@@ -9,6 +9,6 @@
     "webdriverio": "^2.4.5"
   },
   "scripts": {
-    "test": "mocha suites/**/tests/*js"
+    "test": "NODE_PATH=. mocha suites/**/tests/*js"
   }
 }

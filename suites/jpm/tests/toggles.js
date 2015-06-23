@@ -1,8 +1,15 @@
+/**
+ * External dependencies
+ */
 var webdriverio = require( 'webdriverio' ),
 	assert = require( 'assert' ),
 	url = require( 'url' );
 
-var config = require( '../config' );
+/**
+ * Internal dependencies
+ */
+var config = require( '../config' ),
+	utils = require( 'lib/utils' );
 
 var client = {};
 
