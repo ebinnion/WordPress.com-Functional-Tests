@@ -3,6 +3,7 @@
   "description": "A suite of functional tests for WordPress.com",
   "version": "0.0.1",
   "devDependencies": {
+    "assert": "^1.3.0",
     "chai": "^3.0.0",
     "mocha": "^2.2.5",
     "webdriverio": "^2.4.5"
