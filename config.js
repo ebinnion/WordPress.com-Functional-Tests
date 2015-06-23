@@ -1,4 +1,9 @@
 module.exports = {
 	username: '',
-	password: ''
+	password: '',
+	jetpackSite: {
+		url: '',
+		username: '',
+		password: ''
+	}
 };
