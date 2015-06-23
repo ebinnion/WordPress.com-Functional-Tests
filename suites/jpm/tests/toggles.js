@@ -36,10 +36,11 @@ describe( 'Toggle actions', function() {
 	} );
 
 	it( 'toggles exist on single site plugin list', function( done ) {
+		var siteSlug = url.parse( config.jetpackSite.url ).host;
 		client
-			.url( url.resolve( 'https://wordpress.com', url.parse( config.jetpackSite.url ).host ) )
+			.url( url.resolve( 'https://wordpress.com', 'plugins/' + siteSlug ) )
 			.waitFor( '.plugin-item__actions', 2000, function( err ) {
-				assert( err, 'plugin actions do exist' );
+				assert( undefined === err, 'plugin actions do exist' );
 			} )
 			.call( done );
 	} );
