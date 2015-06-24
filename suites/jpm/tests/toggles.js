@@ -43,6 +43,43 @@ describe( 'Toggle actions', function() {
 			.call( done );
 	} );
 
+	it( 'test akismet is initially deactivated', function( done ) {
+		client
+			.url( url.resolve( config.jetpackSite.url, '/wp-admin/plugins.php' ) )
+			.waitFor( '.akismet_activate', 6000, function( err ) {
+				assert( undefined !== err, 'akismet is deactivated' );
+			} )
+			.call( done );
+	} );
+
+	it( 'toggles function correctly', function( done ) {
+		var siteSlug = url.parse( config.jetpackSite.url ).host;
+
+		client
+			.url( url.resolve( 'https://wordpress.com', 'plugins/' + siteSlug ) )
+			.waitFor( '.plugin-item__actions', 10000, function( err ) {
+				assert( undefined === err, 'plugin actions do exist' );
+			} )
+			.click( '.plugin-item .plugin-action .form-toggle__label', function( err ) {
+				assert( undefined === err, 'clicked the active toggle' );
+			} )
+			.waitFor( '.notice.is-success', 10000, function( err ) {
+				assert( undefined === err, 'toggle successfully toggled' );
+			} )
+			.url( url.resolve( config.jetpackSite.url, '/wp-admin/plugins.php' ) )
+			.waitFor( '.akismet_activate', 6000, function( err ) {
+				assert( undefined === err, 'akismet is deactivated' );
+			} )
+			.url( url.resolve( 'https://wordpress.com', 'plugins/' + siteSlug ) )
+			.waitFor( '.plugin-item__actions', 10000, function( err ) {
+				assert( undefined === err, 'plugin actions do exist' );
+			} )
+			.click( '.plugin-item .plugin-action .form-toggle__label', function( err ) {
+				assert( undefined === err, 'clicked the active toggle' );
+			} )
+			.call( done );
+	} );
+
 	after( function( done ) {
 		client.wpcomLogout();
 		client.end( done );
