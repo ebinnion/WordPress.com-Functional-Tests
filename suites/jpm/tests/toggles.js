@@ -1,29 +1,27 @@
 /**
  * External dependencies
  */
-var webdriverio = require( 'webdriverio' ),
-	assert = require( 'assert' ),
+var assert = require( 'assert' ),
 	url = require( 'url' );
 
 /**
  * Internal dependencies
  */
 var config = require( '../config' ),
-	utils = require( 'lib/utils' );
-
-var client = {};
+	client = require( 'lib/client' );
 
 describe( 'Toggle actions', function() {
 	this.timeout( 99999999 );
 
 	before( function( done ) {
-		client = webdriverio.remote( {
-			desiredCapabilities: { browserName: 'chrome' }
-		} );
-		client.init();
-		utils.wpcomLogin( client, config.username, config.password, function() {
-			done();
-		} );
+		client
+			.wpcomLogin( config.username, config.password )
+			.selfHostedLogin(
+				config.jetpackSite.url,
+				config.jetpackSite.username,
+				config.jetpackSite.password,
+				done
+			);
 	} );
 
 	it( 'toggles do not exist on all sites plugin list', function( done ) {
@@ -46,8 +44,7 @@ describe( 'Toggle actions', function() {
 	} );
 
 	after( function( done ) {
-		utils.wpcomLogout( client, function() {
-			client.end( done );
-		} );
+		client.wpcomLogout();
+		client.end( done );
 	} );
 } );
